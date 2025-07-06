@@ -1,1 +1,71 @@
-<p>signup works!</p>
+<div class="form-container">
+  <mat-card class="form-card">
+    <mat-card-title>Create a New Account</mat-card-title>
+    <mat-card-subtitle>Join the University Management System</mat-card-subtitle>
+
+    <mat-card-content>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate>
+
+        <!-- Full Name -->
+        <mat-form-field appearance="outline">
+          <mat-label>Full Name</mat-label>
+          <input matInput formControlName="name" placeholder="e.g. Jane Doe" required>
+          <mat-error *ngIf="signupForm.get('name')?.hasError('required')">Full name is required.</mat-error>
+          <mat-error *ngIf="signupForm.get('name')?.hasError('minlength')">Name must be at least 3 characters long.</mat-error>
+        </mat-form-field>
+
+        <!-- Email -->
+        <mat-form-field appearance="outline">
+          <mat-label>Email Address</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="e.g. jane.doe@university.edu" required>
+          <mat-error *ngIf="signupForm.get('email')?.hasError('required')">Email is required.</mat-error>
+          <mat-error *ngIf="signupForm.get('email')?.hasError('email')">Please enter a valid email address.</mat-error>
+        </mat-form-field>
+
+        <!-- Password -->
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" required>
+          <mat-error *ngIf="signupForm.get('password')?.hasError('required')">Password is required.</mat-error>
+          <mat-error *ngIf="signupForm.get('password')?.hasError('minlength')">Password must be at least 8 characters long.</mat-error>
+        </mat-form-field>
+        
+        <!-- Date of Birth -->
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dob" [max]="maxDate" readonly required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="signupForm.get('dob')?.hasError('required')">Date of birth is required.</mat-error>
+        </mat-form-field>
+
+        <!-- Role -->
+        <mat-form-field appearance="outline">
+          <mat-label>I am a...</mat-label>
+          <mat-select formControlName="role" required>
+            <mat-option value="student">Student</mat-option>
+            <mat-option value="professor">Professor</mat-option>
+          </mat-select>
+          <mat-error *ngIf="signupForm.get('role')?.hasError('required')">Please select a role.</mat-error>
+        </mat-form-field>
+        
+        <!-- Feedback and Spinner Container -->
+        <div class="feedback-container">
+          <mat-spinner *ngIf="isLoading" diameter="24"></mat-spinner>
+          <!-- The success message div is removed as it's no longer used -->
+          <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+        </div>
+
+        <!-- Submit Button -->
+        <button mat-raised-button color="primary" type="submit" [disabled]="isLoading || signupForm.invalid" class="submit-button">
+          Sign Up
+        </button>
+      </form>
+    </mat-card-content>
+    
+    <mat-card-actions class="redirect-actions">
+        <span>Already have an account?</span>
+        <a mat-button color="accent" routerLink="/authentication/login">Login Here</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

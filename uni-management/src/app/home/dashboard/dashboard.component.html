@@ -1,1 +1,58 @@
-<p>dashboard works!</p>
+<mat-toolbar color="primary" class="main-toolbar">
+  <span>University Management</span>
+  <span class="toolbar-spacer"></span>
+  <button mat-icon-button (click)="logout()" matTooltip="Logout">
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="dashboard-container" *ngIf="userPayload">
+  <header class="dashboard-header">
+    <h1>Welcome, {{ userEmail }}!</h1>
+    <p>Your role: <span class="user-role">{{ userPayload.user.role }}</span></p>
+  </header>
+
+  <!-- Student-specific content -->
+  <div *ngIf="userPayload.user.role === 'student'" class="card-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>My Courses</mat-card-title>
+        <mat-card-subtitle>View your enrolled courses</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Feature coming soon...</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>My Grades</mat-card-title>
+        <mat-card-subtitle>Check your academic performance</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Feature coming soon...</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Professor-specific content -->
+  <div *ngIf="userPayload.user.role === 'professor'" class="card-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Manage Classes</mat-card-title>
+        <mat-card-subtitle>View and edit your assigned classes</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Feature coming soon...</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Grade Submissions</mat-card-title>
+        <mat-card-subtitle>Enter grades for your students</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Feature coming soon...</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
